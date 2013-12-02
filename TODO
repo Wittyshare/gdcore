@@ -1,0 +1,7 @@
+Remplacer les wtFind par les cmake find
+How to unset GD_HAVE_GNUMERIC
+
+We need a simpler way to compile than this 
+ cmake -Wno-dev -D CONNECTOR_FCGI=ON -D CONNECTOR_HTTP=ON -DBoost_NO_SYSTEM_PATHS=TRUE -DBUILD_LIB_STATIC=false -DBUILD_LIB_SHARED=true  -DAPPNAME=gdcore -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT=/usr/  ..
+
+Update gdcore to work with boost 1.48

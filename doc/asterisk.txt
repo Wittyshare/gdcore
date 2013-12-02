@@ -1,0 +1,127 @@
+# Connection
+telnet 192.168.3.201 5038
+
+Action: Login
+Username: manapi
+Secret: goodpasswd
+Events: off
+
+    Response: Success/Error
+    Message: Authentication accepted/failed
+
+# Originate a call
+
+    Action: Originate
+    Parameters:
+        Channel: Channel on which to originate the call (The same as you specify in the Dial application command)
+        Context: Context to use on connect (must use Exten & Priority with it)
+        Exten: Extension to use on connect (must use Context & Priority with it)
+        Priority: Priority to use on connect (must use Context & Exten with it)
+        Timeout: Timeout (in milliseconds) for the originating connection to happen(defaults to 30000 milliseconds)
+        CallerID: CallerID to use for the call
+        Variable: Channels variables to set (max 32). Variables will be set for both channels (local and connected).
+        Account: Account code for the call
+        Application: Application to use on connect (use Data for parameters)
+        Data : Data if Application parameter is used
+        Async: For the origination to be asynchronous (allows multiple calls to be generated without waiting for a response)
+        ActionID: The request identifier. It allows you to identify the response to this request. You may use a number or a string. Useful when you make several simultaneous requests.
+Action: Originate
+Channel: DAHDI/g1/003227387940
+Context: default
+Exten: 24
+callerId: 27387924
+Priority: 1
+Timeout: 30000
+
+
+        Sequence of events: first the Channel is rung. Then, when that answers, the Extension is dialled within the Context to initiate the other end of the call. Note that the Timeout only applies to the initial connection to the Channel; any timeout for the other end can be specified, for instance in a Dial command in the definition of the Context.
+
+        Using Async leads to an OriginateResponse event which contains the failure reason if any. Reason may be one of the following:
+
+        0 = no such extension or number
+        1 = no answer
+        4 = answered
+        8 = congested or not available
+
+
+
+# Extension status
+
+    Action: ExtensionState
+    Exten: 24
+
+    Response: Success
+    Message: Extension Status
+    Exten: 24
+    Context: default
+    Hint: SIP/24
+    Status: 0
+
+    Status codes:
+    -1 = Extension not found
+    0 = Idle
+    1 = In Use
+    2 = Busy
+    4 = Unavailable
+    8 = Ringing
+    16 = On Hold
+
+# Register to event
+
+    Action: Events
+    EventMask:
+
+        'on' if all events should be sent,
+        'off' if no events should be sent,
+        in /etc/asterisk/manager.conf
+        'system,call,log,verbose,command,agent,user' to select which flags events should have to be sent.
+        In asterisk 1.6 you can also have 'reporting' as a flag.
+
+# List conference 
+    Action: Command
+    Command: meetme list
+    
+    Response: Follows
+    Privilege: Command
+    Conf Num       Parties        Marked     Activity  Creation  Locked
+    12             0001	      N/A        00:00:05  Dynamic   No    
+    11             0001	      N/A        00:00:46  Dynamic   No    
+    * Total number of MeetMe users: 2
+
+
+# List conference participants
+
+    Action: Command
+    Command: meetme list 11
+
+    Response: Follows
+    Privilege: Command
+    User #: 02           66 The Square           Channel: SIP/66-00000075     (unmonitored) 00:01:59
+    User #: 03           27 Guest (27)           Channel: SIP/27-00000076     (unmonitored) 00:00:38
+    User #: 01    027387940 027387940            Channel: SIP/02737027-3-00000075     (unmonitored) 00:00:04
+    2 users in that conference.
+
+# Mute conference user
+    
+    Action: MeetmeMute
+    MeetMe: 11
+    Usernum: 1
+
+    Response: Success
+    Message: User muted
+
+# Unmute conference user
+    Action: MeetmeUnmute 
+    MeetMe: 11
+    Usernum: 1
+
+    Response: Success
+    Message: User unmuted
+
+# Hangup a channel
+    Action: Hangup           
+    Channel: SIP/27-0000007d
+
+    Response: Success
+    Message: Channel Hungup
+
