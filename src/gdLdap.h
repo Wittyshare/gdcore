@@ -259,8 +259,7 @@ public:
   char*                 GetRdn(char* pDn);
   char*                 GetParentDN(const char* theDN);
   bool                  GetInfo(gdCLdapFilter& cFilter, std::string* spFilter, gdCLdapAttributes& witchAttributes, gdCLdapEntries& cEntries, bool bCountEntries = false);
-  bool                  GetInfo(gdCLdapFilter& cFilter, gdCLdapAttributes& witchAttributes, gdCLdapEntries& cEntries, bool bCountEntries = false) \ 
-  { return GetInfo(cFilter, 0, witchAttributes, cEntries, bCountEntries); };
+  bool                  GetInfo(gdCLdapFilter& cFilter, gdCLdapAttributes& witchAttributes, gdCLdapEntries& cEntries, bool bCountEntries = false) { return GetInfo(cFilter, 0, witchAttributes, cEntries, bCountEntries); };
 
 private :
 
