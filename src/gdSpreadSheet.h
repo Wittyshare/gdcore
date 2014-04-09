@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-void gdSpreadSheet_init();
+  void gdSpreadSheet_init();
 
 #ifdef __cplusplus
 }

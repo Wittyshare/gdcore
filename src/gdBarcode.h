@@ -17,15 +17,15 @@
 extern "C" {
 #endif
 
-/*! \brief Compute the checksum of a bar code.
+  /*! \brief Compute the checksum of a bar code.
 
- */
-int gdBarcode_doEan13Checksum(const char* BufIn, char* BufOut);
+   */
+  int gdBarcode_doEan13Checksum(const char* BufIn, char* BufOut);
 
-/*! \brief Return the string for rendering the bar code with the Ean13 font.
+  /*! \brief Return the string for rendering the bar code with the Ean13 font.
 
- */
-int gdBarcode_toEan13Font(const char* BufIn, unsigned char* BufOut);
+   */
+  int gdBarcode_toEan13Font(const char* BufIn, unsigned char* BufOut);
 
 #ifdef __cplusplus
 }
